@@ -1,18 +1,18 @@
 # **NutriDiarium**
 NutriDiarium is a simple nutrition tracker built with Python. It can help you eat better and reach your weight goals.
 
-This is my final project for CS50's Introduction to Programming with Python.
+This was my final project for CS50's Introduction to Programming with Python.
+
+After submiting the project I decided to improve it with a local SQLite3 database.
 
 
 ## Table of Contents
-- [Video demo](#video-demo)
 - [Features](#features)
 - [FAQ](#frequently-asked-questions)
 - [Project struture](#project-struture)
 - [Installation](#installation)
 - [Usage](#Usage)
 
-## Video Demo: https://youtu.be/UJ3MI6qSVFg
 
 ## Features
 - Calculate the ideal amount of calories and macronutrients you should consume.
@@ -26,6 +26,7 @@ This is my final project for CS50's Introduction to Programming with Python.
 - IDNI stands for Ideal Daily Nutritional Intake. It's the calories, carbohydrates, fat and protein that you should ideally consume every day.
 - The values are different for every person and are based on age, height, weight, gender, how active you are through the day and your weight goal.
 
+
 ### How is my IDNI being calculated? What is the formula?
 - To calculate the calories it uses the Mifflin St. Jeor equation, which is considered the best formula by many nutritionists.
 
@@ -34,20 +35,14 @@ This is my final project for CS50's Introduction to Programming with Python.
     - Protein = (Calories * 0.3) / 4
     - Carbohydrates* = (Calories * 0.4) / 4
 
-### How is data being stored? Is it possible to edit it without using the program?
-- The program will create 3 CSV files automatically after you open it for the first time. All data is stored in those files and you _can_ alter them in separate programs.
-- If the program breaks simply delete the 3 CSV files in the directory and let the program create new ones automatically.
+### How is data being stored? 
+- The program is storing the information in the database.db file.
 
 
 ## Project structure
 ### Folder contents:
 - project.py - Contains the main function and all other functions.
 - requirements.txt - All required pip-installable libraries.
-- test_project.py - This file contains the test functions for project.py.
-### Files created after using the program:
-- personal_info.csv - Stores the user's IDNI values (Ideal Daily Nutritional Intake).
-- food.csv - Stores the values of the foods the user added to the database.
-- date.csv - Stores the user's nutritional intake during the day.
 
 
 ## Installation
