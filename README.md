@@ -17,7 +17,7 @@ After submiting the project I decided to improve it with a local SQLite3 databas
 ## Features
 - Calculate the ideal amount of calories and macronutrients you should consume.
 - Track your calories and macronutrients.
-- Saves data locally in CSV files.
+- Saves data locally in a SQLite3 database.
 - Uses a simple command-line interface.
 
 
