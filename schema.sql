@@ -41,3 +41,9 @@ CREATE TABLE "food_consumed" (
     PRIMARY KEY("id"),
     FOREIGN KEY("food_name") REFERENCES "food"("name") 
 );
+
+CREATE TABLE "weight" (
+"date" DATE,
+"weight" REAL NOT NULL,
+PRIMARY KEY("date")
+);

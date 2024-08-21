@@ -2,8 +2,10 @@ import sys
 import os
 import sqlite3
 import pyinputplus as pyip
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 from datetime import date
+
 
 connection = sqlite3.connect("database.db")
 connection.row_factory = sqlite3.Row
@@ -36,6 +38,7 @@ def main_menu():
         ["1: Personal information"],
         ["2: Food"],
         ["3: Diary"],
+        ["4: Weight progression"],
         ["Q: Quit the program"],
     ]
     print("")
@@ -47,6 +50,8 @@ def main_menu():
             food_menu()
         case "3":
             diary_menu()
+        case "4":
+            weight_menu()
         case "Q":
             sys.exit("Exiting program...")
         case _:
@@ -123,6 +128,25 @@ def diary_menu():
             change_diary_date()
         case _:
             main_menu()
+
+def weight_menu():
+    table = [
+        ["1: Show weight logs"],
+        ["2: Add weight entry"],
+        ["B: Back to the main menu"],
+    ]
+    print("")
+    print(tabulate(table, headers=[f"WEIGHT MENU"], tablefmt="simple_outline"))
+    match input("Enter your choice: ").upper():
+        case "1":
+            show_weight_progression()
+        case "2":
+            add_weight_entry()
+        case _:
+            main_menu()
+
+
+
 
 
 #########################
@@ -420,7 +444,7 @@ def add_food_to_diary():
         VALUES(?, ?, ?, ?, ?, ?, ?);
         """,
             (
-                date,
+                str(date),
                 food_name,
                 portion,
                 consumed_values[0],
@@ -517,6 +541,62 @@ def change_diary_date():
     diary_menu()
 
 
+def add_weight_entry():
+    date="2024-08-22"
+    weight = pyip.inputNum("Weight: ", min=1, max=999)
+    try:
+        cursor.execute(
+            """
+            INSERT INTO weight(
+            date, 
+            weight        
+            )
+            VALUES(?, ?)
+            """,
+            (
+                str(date),
+                weight,
+            ),
+        )
+        connection.commit()
+        print("\n*** Weight log added successfully to the database! ***")
+    
+    except sqlite3.IntegrityError:
+        print("\n*** You already logged a weight today! Try tomorrow. ***")
+
+
+    print("Returning to the menu...")
+    weight_menu()
+
+def show_weight_progression():
+    weight_progression = cursor.execute(
+        """
+    SELECT *
+    FROM weight;
+    """
+    )
+
+    dates=[]
+    weight=[]
+    for row in weight_progression:
+        dates.append(row["date"])
+        weight.append(row["weight"])
+
+    plt.plot(dates, weight)
+    plt.title("Weight")
+    plt.xlabel("Date")
+    plt.ylabel("Weight")
+    plt.tight_layout()
+    plt.show()
+
+    print("Returning to the menu...")
+    weight_menu()
+
+#########################
+#   OTHER FUNCTIONS   #
+#########################
+
+
 def check_if_item_exists_in_database(table, column, item):
     cursor.execute(
         f"""
@@ -608,8 +688,6 @@ def print_table(data, header, skip=False):
     )
     if not skip:
         input("Press enter to go back to the menu: ")
-
-# Test comment
 
 
 if __name__ == "__main__":
