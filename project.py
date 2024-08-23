@@ -542,7 +542,6 @@ def change_diary_date():
 
 
 def add_weight_entry():
-    date="2024-08-22"
     weight = pyip.inputNum("Weight: ", min=1, max=999)
     try:
         cursor.execute(
