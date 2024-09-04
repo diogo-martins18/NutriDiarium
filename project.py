@@ -205,6 +205,7 @@ def show_food_database():
         """
         SELECT name, portion, calories, fat, carbs, protein
         FROM food
+        ORDER BY name
         """
     )
 
@@ -226,7 +227,7 @@ def add_food_to_database():
         if value == "Name":
             food_values.append(pyip.inputStr("Name: "))
         else:
-            food_values.append(pyip.inputNum(f"{value}: ", min=0.1))
+            food_values.append(pyip.inputNum(f"{value}: ", min=0))
 
     # Append food to food.csv.
     cursor.execute(
@@ -264,7 +265,7 @@ def edit_food_in_database():
             if value == "Name":
                 new_item.append(pyip.inputStr("New Name: "))
             else:
-                new_item.append(pyip.inputNum(f"New {value}: ", min=0.1))
+                new_item.append(pyip.inputNum(f"New {value}: ", min=0))
 
         cursor.execute(
             """
